@@ -1,0 +1,5 @@
+praw
+pandas 
+bs4
+time
+os
