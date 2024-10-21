@@ -6,7 +6,7 @@ import os
 driver = webdriver.Chrome()
 
 with open("url_keywords.txt", "r", encoding="utf-8") as file:
-    keywords_url = [line.strip() for line in file.readlines()]
+    keywords_url = ["https://www.reddit.com/search/?q="+line.strip() for line in file.readlines()]
 
 output_folder = 'reddit_crawled_urls'
 if not os.path.exists(output_folder):
