@@ -2,14 +2,22 @@ import praw
 import pandas as pd
 import os
 
-reddit = praw.Reddit(user_agent=True, client_id="ssss",
+
+reddit = praw.Reddit(user_agent=True, client_id="sss",
                      client_secret="sss",
                      user_name="sss", password="sss")
+
+
 folder_path = 'reddit_crawled_urls'
-file_counter = 1
+
+save_folder = 'datasets_unprocessed'
+if not os.path.exists(save_folder):
+    os.makedirs(save_folder)  
 for filename in os.listdir(folder_path):
     if filename.endswith(".txt"):
         file_path = os.path.join(folder_path, filename)
+        
+        keyword = filename.replace('urls_to_crawl_', '').replace('.txt', '')
 
         with open(file_path, 'r', encoding='utf-8') as file:
             valid_links = [line.strip() for line in file.readlines()]
@@ -37,7 +45,6 @@ for filename in os.listdir(folder_path):
 
         df = pd.DataFrame(posts_data)
 
-        df.to_csv(f"df{file_counter}.csv", index=False)
-        print(f"Dataset saved to 'df{file_counter}.csv'.")
-
-        file_counter += 1
+        csv_path = os.path.join(save_folder, f"{keyword}.csv")
+        df.to_csv(csv_path, index=False)
+        print(f"Dataset saved to '{csv_path}'.")
